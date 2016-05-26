@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     double valueC;
     double ans1;
     double ans2;
-
+    public double topSqrt;
 
 
     @Override
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         mTextB = (EditText) findViewById(R.id.editTextB);
         mTextC = (EditText) findViewById(R.id.editTextC);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+       
 
 
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -55,25 +55,45 @@ public class MainActivity extends AppCompatActivity {
                 valueA = (double) Integer.parseInt(mTextA.getText().toString());
                 valueB = (double) Integer.parseInt(mTextB.getText().toString());
                 valueC = (double) Integer.parseInt(mTextC.getText().toString());
-                double topPos = (((valueB)) + Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC))));
-               double topNeg = (((valueB)) - Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC))));
-                ans1 =((topPos)  / (2 * valueA)*-1);
-                ans2 = ((topNeg)/ (2 * valueA)*-1);
+                topSqrt = Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC)));
+                //if( Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC)))<0) {
+                    //imagNum(topSqrt);
+                    //double topPos = (((valueB)) + Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC))));
+                    ////double topNeg = (((valueB)) - Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC))));
+                    //topSqrt = Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC)));
+                    //ans1 = ((topPos) / (2 * valueA) * -1);
+                    //ans2 = ((topNeg) / (2 * valueA) * -1);
+                    //mView1.setText(((valueB) + (imagNum(topSqrt))) + "/" + ((2 * valueA) * -1));
+                //}
 
 
+                {
+                    double topPos = (((valueB)) + Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC))));
+                    double topNeg = (((valueB)) - Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC))));
+                    topSqrt = Math.sqrt((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC)));
+                    //ans1 = ((topPos) / (2 * valueA) * -1);
+                    // ans2 = ((topNeg) / (2 * valueA) * -1);
+                    if ((Math.pow(valueB, 2.0) - (4.0 * valueA * valueC)) < 0) {
+                        mView1.setText("Imaginary Solution");
+                        mView2.setText("Imaginary Solution");
+
+                    } else {
+                        ans1 = ((topPos) / (2 * valueA) * -1);
+                        ans2 = ((topNeg) / (2 * valueA) * -1);
 
 
-                posQuad = "x = "+ ans1;
-                negQuad = "x = "+ ans2;
+                        posQuad = "x = " + ans1;
+                        negQuad = "x = " + ans2;
 
-                mView1.setText(posQuad);
-                mView2.setText(negQuad);
 
+                        mView1.setText(round(posQuad));
+                        mView2.setText(round(negQuad));
+                    }
+
+                }
             }
         });
     }
-
-
 
 
     @Override
@@ -82,6 +102,29 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+    public String imagNum(double i) {
+        double square = i / 2;
+        String imagin= "";
+        if (i < 0) {
+            if (square * 2 == 1) {
+                imagin = square + "i";
+            }
+        }
+        return imagin;
+    }
+
+    public String round(String d ){
+        String num= ""+d;
+        if(num.contains(".")){
+            num = num.substring(0, (num.indexOf(".")+5));
+        }
+
+        return num;
+    }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
